@@ -9,8 +9,8 @@
     stages {
         stage('SCM Checkout') {
             steps {
-                git branch: 'main', credentialsId: 'git-hub-credentials', 
-				url: 'https://github.com/vikas99341/K8S-pipeline.git'
+                git branch: 'main', credentialsId: 'git-cred', 
+				url: 'https://github.com/satheeshgunji/K8S-pipeline.git'
             }
         }
         stage('Maven-Steps') {
@@ -20,15 +20,15 @@
         }
         stage('Docker-Build') {
             steps {
-				sh 'docker build . -t vikas24775/nodeapp:${DOCKER_TAG}'
+				sh 'docker build . -t satheeshgunji/nodeapp:${DOCKER_TAG}'
             }
         }
         stage('Docker-Push') {
             steps {
-				withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
-					sh 'docker login -u vikas24775 -p ${dockerHubPwd}'
+				withCredentials([string(credentialsId: 'dockerpass', variable: 'dockerhubpassword')]) {
+					sh 'docker login -u satheeshgunji -p ${dockerhubpassword}'
 				}
-			sh 'docker push vikas24775/nodeapp:${DOCKER_TAG}'
+			sh 'docker push satheeshgunji/nodeapp:${DOCKER_TAG}'
             }
         }
         stage('Deploy to k8s'){
