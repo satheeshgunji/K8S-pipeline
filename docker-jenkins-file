@@ -27,8 +27,8 @@ pipeline {
         }
         stage('Docker-push') { 
             steps {
-				withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
-					sh 'docker login -u vikas24775 -p ${dockerHubPwd}'
+				withCredentials([string(credentialsId: 'dockerpass', variable: 'dockerhubPwd')]) {
+					sh 'docker login -u satheeshgunji -p ${dockerhubPwd}'
 				}
                 sh 'docker push satheeshgunji/jenkins-tomcat:9.0 ' 
             }
